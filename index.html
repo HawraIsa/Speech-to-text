@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Speech-to-Text App</title>
+</head>
+<body>
+    <h1>Speech-to-Text</h1>
+
+    <div id="controls">
+        <label for="language-selector">Language:</label>
+        <select id="language-selector">
+            <option value="en-US">English</option>
+            <option value="ar-SA">Arabic</option>
+        </select>
+
+        <button id="start-button">Start</button>
+        <button id="stop-button">Stop</button>
+    </div>
+
+    <!-- <h2>Status:</h2> -->
+    <div id="status-indicator" ></div>
+
+    <h2>Recognized Text:</h2>
+    <div id="result-output"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
