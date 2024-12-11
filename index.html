@@ -10,7 +10,6 @@
     <h1>Speech-to-Text</h1>
 
     <div id="controls">
-        <label for="language-selector">Language:</label>
         <select id="language-selector">
             <option value="en-US">English</option>
             <option value="ar-SA">Arabic</option>
@@ -18,10 +17,20 @@
 
         <button id="start-button">Start</button>
         <button id="stop-button">Stop</button>
-    </div>
+    </div><br>
 
     <!-- <h2>Status:</h2> -->
-    <div id="status-indicator" ></div>
+    <!-- <div id="status-indicator" ></div> -->
+    <div id="status-indicator" style="display: none;">
+        <div class="container">
+            <div class="canvas canvas6">
+                <div class="spinner6 p1"></div>
+                <div class="spinner6 p2"></div>
+                <div class="spinner6 p3"></div>
+                <div class="spinner6 p4"></div>
+            </div>
+        </div>
+    </div><br>
 
     <h2>Recognized Text:</h2>
     <div id="result-output"></div>

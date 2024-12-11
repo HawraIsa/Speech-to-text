@@ -2,25 +2,35 @@
 // in Browsers like Chrome
 //but may require a different implementation in non-WebKit browsers.
 
-// Check if the browser supports the Web Speech API
-if (!('webkitSpeechRecognition' in window)) {
-    alert('Your browser does not support Speech Recognition. Please use a compatitable browser like Google Chrome.');
-} else {
-    // Initialize the SpeechRecognition object
-    const speachRecognition = new webkitSpeechRecognition();
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if the browser supports the Web Speech API
+    if (!('webkitSpeechRecognition' in window)) {
+        alert('Your browser does not support Speech Recognition. Please use a compatitable browser like Google Chrome.');
+    } else {
+        // Initialize the SpeechRecognition object
+        const speachRecognition = new webkitSpeechRecognition();
 
-    // Set recognition properties
-    speachRecognition.continuous = false; // capture a single word at a time
-    //speachRecognition.interimResults = false; // return only final results
-    speachRecognition.interimResults = true;
-    speachRecognition.lang = 'en-US'; // default language is English
+        // Set recognition properties
+        speachRecognition.continuous = false; // capture a single word at a time
+        //speachRecognition.interimResults = false; // return only final results
+        speachRecognition.interimResults = true;
+        speachRecognition.lang = 'en-US'; // default language is English
 
-    // HTML elements for user interface
-    const startButton = document.getElementById('start-button');
-    const stopButton = document.getElementById('stop-button');
-    const resultOutput = document.getElementById('result-output');
-    const languageSelector = document.getElementById('language-selector');
-    const statusIndicator = document.getElementById('status-indicator');
+        // HTML elements for user interface
+        const startButton = document.getElementById('start-button');
+        const stopButton = document.getElementById('stop-button');
+        const resultOutput = document.getElementById('result-output');
+        const languageSelector = document.getElementById('language-selector');
+        const statusIndicator = document.getElementById('status-indicator');
+
+    // update status indicator
+    function updateStatusIndicator(visible) {
+        if (visible) {
+            statusIndicator.style.display = 'block';
+        } else {
+            statusIndicator.style.display = 'none';
+        }  
+    }
 
     // start recognition when user clicks the start button
     startButton.addEventListener('click', () => {
@@ -32,15 +42,15 @@ if (!('webkitSpeechRecognition' in window)) {
         speachRecognition.start();
         console.log('Speech recognition started with language:', selectedLanguage);
 
-        // update status indicator
-        statusIndicator.textContent = 'Listening...';
-        statusIndicator.style.color = 'green';
+        updateStatusIndicator(true);
     });
 
     // stop recognition when the user clicks the stop button
     stopButton.addEventListener('click', () => {
         speachRecognition.stop();
         console.log('Speech recognition stopped.');
+
+        updateStatusIndicator(false);
     });
 
     // handle the result of speech recognition
@@ -48,6 +58,8 @@ if (!('webkitSpeechRecognition' in window)) {
         const transcript = event.results[0][0].transcript; // get the first recognized result
         resultOutput.textContent = transcript; // display the transcript
         console.log('Recognized speech:', transcript);
+
+        updateStatusIndicator(true);
     };
 
     // handle recognition errors
@@ -55,17 +67,14 @@ if (!('webkitSpeechRecognition' in window)) {
         console.error('Speech recognition error:', event.error);
         alert('an error occurred during speech recognition: ' + event.error);
 
-        // update status indicator
-        statusIndicator.textContent = 'recongnition Error';
-        statusIndicator.style.color = 'red';
+        updateStatusIndicator(true);
     };
 
     // handle recognition end event
     speachRecognition.onend = () => {
         console.log('Speech recognition has ended.');
 
-        // Update status indicator
-        statusIndicator.textContent = '';
+        updateStatusIndicator(false);
     };
 }
-
+});
